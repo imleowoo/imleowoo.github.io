@@ -106,5 +106,5 @@ theme: landscape
 
 deploy:
   type: 'git'
-  repo: git@github.com:imleowoo/imleowoo.github.io.git
+  #repo: git@github.com:imleowoo/imleowoo.github.io.git
   branch: gh-pages
