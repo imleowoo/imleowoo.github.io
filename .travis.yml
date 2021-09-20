@@ -15,5 +15,5 @@ deploy:
   keep-history: true
   on:
     branch: main
-    local-dir: public
+  local-dir: public
 
