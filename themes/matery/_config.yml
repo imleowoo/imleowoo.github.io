@@ -326,8 +326,8 @@ valine:
   visitor: true
   avatar: 'mm' # Gravatar style : mm/identicon/monsterid/wavatar/retro/hide
   pageSize: 10
-  placeholder: 'comment here' # Comment Box placeholder
-  background: /medias/comment_bg.png
+  placeholder: 'Comment Here ~' # Comment Box placeholder
+  background: 
   coolpushkey: 
 
 # The configuration of the MiniValine comment module is not activated by default.
