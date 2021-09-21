@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
+title: LEO'S BLOG
+subtitle: '千层山 万重浪 不如县城一碗汤'
 description: ''
-keywords:
-author: John Doe
-language: en
-timezone: ''
+keywords: 编程,生活,电影,美食
+author: Leo
+language: zh-CN
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -40,21 +40,31 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
-highlight:
-  enable: true
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
-  wrap: true
-  hljs: false
+# highlight:
+#   enable: true
+#   line_number: true
+#   auto_detect: false
+#   tab_replace: ''
+#   wrap: true
+#   hljs: false
 prismjs:
   enable: false
   preprocess: true
   line_number: true
   tab_replace: ''
+
+highlight: 
+  enable: false 
+  line_number: false
+prism_plugin: 
+  mode: 'preprocess' # realtime/preprocess 
+  theme: 'tomorrow' 
+  line_number: false # default false 
+  custom_css:
+
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -68,6 +78,12 @@ index_generator:
 # Category & Tag
 default_category: uncategorized
 category_map:
+  编程: programming 
+  生活: life 
+  阅读: reading 
+  随想: thoughts 
+  理财: finance
+  电影: film
 tag_map:
 
 # Metadata elements
@@ -97,7 +113,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: matery
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -108,3 +124,14 @@ deploy:
   type: 'git'
   #repo: git@github.com:imleowoo/imleowoo.github.io.git
   branch: gh-pages
+  message: Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }})
+
+# 搜索功能
+search:
+  path: search.xml
+  field: post
+
+# 汉语转拼音
+permalink_pinyin: 
+  enable: true 
+  separator: '-' # default: '-'
