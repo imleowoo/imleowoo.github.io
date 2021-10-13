@@ -4,8 +4,8 @@
 
 # Site
 title: LEO'S BLOG
-subtitle: '千层山万重浪，不如县城一碗汤'
-description: ''
+subtitle: ''
+description: '千层山万重浪，不如县城一碗汤'
 keywords: 编程,生活,电影,美食,数码
 author: Leo
 language: zh-CN
@@ -56,12 +56,12 @@ prismjs:
   line_number: true
   tab_replace: ''
 
-highlight: 
-  enable: false 
+highlight:
+  enable: false
   line_number: false
-prism_plugin: 
+prism_plugin:
   mode: 'preprocess' # realtime/preprocess 
-  theme: 'tomorrow' 
+  theme: 'tomorrow'
   line_number: false # default false 
   custom_css:
 
@@ -78,10 +78,10 @@ index_generator:
 # Category & Tag
 default_category: uncategorized
 category_map:
-  编程: programming 
-  生活: life 
-  阅读: reading 
-  随想: thoughts 
+  编程: programming
+  生活: life
+  阅读: reading
+  随想: thoughts
   理财: finance
   电影: film
 tag_map:
@@ -124,7 +124,7 @@ deploy:
   type: 'git'
   #repo: git@github.com:imleowoo/imleowoo.github.io.git
   branch: gh-pages
-  
+
 
 # 搜索功能
 search:
@@ -132,6 +132,6 @@ search:
   field: post
 
 # 汉语转拼音
-permalink_pinyin: 
-  enable: true 
+permalink_pinyin:
+  enable: true
   separator: '-' # default: '-'

@@ -12,5 +12,5 @@ tags: 生活
 ```python
 import requests
 
-resp = requests.get('http://baidu.com)
+resp = requests.get('http://baidu.com')
 ```

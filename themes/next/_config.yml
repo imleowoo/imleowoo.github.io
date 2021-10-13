@@ -164,7 +164,8 @@ sidebar:
 # Sidebar Avatar
 avatar:
   # Replace the default image and set the url here.
-  url: #/images/avatar.gif
+  # url: #/images/avatar.gif
+  url: 'https://avatars.githubusercontent.com/u/33342014'
   # If true, the avatar will be dispalyed in circle.
   rounded: false
   # If true, the avatar will be rotated with the cursor.
@@ -677,7 +678,7 @@ google_analytics:
   only_pageview: false
 
 # Baidu Analytics
-baidu_analytics: # <app_id>
+baidu_analytics: 41fc030db57d5570dd22f78997dc4a7e
 
 # Growingio Analytics
 growingio_analytics: # <project_id>
