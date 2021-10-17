@@ -638,8 +638,8 @@ gitalk:
   enable: true
   github_id: Leo # GitHub repo owner
   repo: imleowoo.github.io # Repository name to store issues
-  client_id: d50ce02a69d6f122f227 # GitHub Application Client ID
-  client_secret: cb9eecae0d8bc88d2023fba9a86a60e9f4df10fa # GitHub Application Client Secret
+  client_id: 0d05ea730fc8c8859831 # GitHub Application Client ID
+  client_secret: 91f26084ddb2841d925ae9966fd796755fa5063a # GitHub Application Client Secret
   admin_user: Leo # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
   distraction_free_mode: false # Facebook-like distraction free mode
   # Gitalk's display language depends on user's browser or system environment
