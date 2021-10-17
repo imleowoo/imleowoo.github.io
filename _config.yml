@@ -43,27 +43,18 @@ render_drafts: false
 post_asset_folder: true
 relative_link: false
 future: true
-# highlight:
-#   enable: true
-#   line_number: true
-#   auto_detect: false
-#   tab_replace: ''
-#   wrap: true
-#   hljs: false
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
 prismjs:
   enable: false
   preprocess: true
   line_number: true
   tab_replace: ''
-
-highlight:
-  enable: false
-  line_number: false
-prism_plugin:
-  mode: 'preprocess' # realtime/preprocess 
-  theme: 'tomorrow'
-  line_number: false # default false 
-  custom_css:
 
 
 # Home page setting
@@ -135,3 +126,14 @@ search:
 permalink_pinyin:
   enable: true
   separator: '-' # default: '-'
+
+# 字数统计
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  awl: 2
+  wpm: 275
+  suffix: "mins."
