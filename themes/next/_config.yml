@@ -636,7 +636,7 @@ livere_uid: # <your_uid>
 # For more information: https://gitalk.github.io, https://github.com/gitalk/gitalk
 gitalk:
   enable: true
-  github_id: Leo # GitHub repo owner
+  github_id: imleowoo # GitHub repo owner
   repo: imleowoo.github.io # Repository name to store issues
   client_id: 0d05ea730fc8c8859831 # GitHub Application Client ID
   client_secret: 91f26084ddb2841d925ae9966fd796755fa5063a # GitHub Application Client Secret
