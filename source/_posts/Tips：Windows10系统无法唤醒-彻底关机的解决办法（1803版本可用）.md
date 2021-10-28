@@ -1,5 +1,5 @@
 ---
-title: Windwos10系统无法唤醒/彻底关机的解决办法（1803版本可用）
+title: Tips：Windows10系统无法唤醒/彻底关机的解决办法（1803版本可用）
 description: Windows10系统将Intel MEI更新至最新版本后，可能会出现无法彻底关机或睡眠无法唤醒的情况。可通过降级重装驱动的方式解决该问题。
 author: Leo
 date: 2017-09-22 17:48:13
@@ -9,7 +9,7 @@ tags:
   - 驱动
   - Intel MEI
 categories:
-  - 解决技巧
+  - Tips
 ---
 
 ## 使用环境
