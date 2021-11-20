@@ -14,7 +14,7 @@ categories:
 
 这两天想重温一下以前玩过的单机游戏，然后在我个人觉得还信得过的游戏论坛上找了一个，安装的时候小心翼翼，结果安装之后装上了一堆臭流氓软件，而且主页也被修改了。
 
-![ie-fuck-2345](/images/ie-fuck-2345.png)
+![ie-fuck-2345](ie-fuck-2345.png)
 
 喜欢简洁纯净的我哪能容忍这些操作，于是气愤的将游戏和一堆附加软件给卸载了，然后开始了修改回IE主页的操作...
 
@@ -25,7 +25,7 @@ categories:
 > IE浏览器 > 工具 > Internet选项 > 常规
 
 
-![ie-default-home-page-url](/images/ie-default-home-page-url.png)
+![ie-default-home-page-url](ie-default-home-page-url.png)
 
 这里的必应`https://www.bing.com/`确实是我自行设定的默认主页，浏览器主页并未被修改，看起来一切正常。
 
@@ -33,11 +33,11 @@ categories:
 
 我打开我的开始菜单，发现我的IE浏览器怎么改名为360浏览器了。
 
-![ie-home-page-url-start-menu](/images/ie-home-page-url-start-menu.png)
+![ie-home-page-url-start-menu](ie-home-page-url-start-menu.png)
 
 右键查看`360极速浏览器`的属性
 
-![ie-home-page-url-application-properties](/images/ie-home-page-url-application-properties.png)
+![ie-home-page-url-application-properties](ie-home-page-url-application-properties.png)
 
 #### 猫腻之处
 
@@ -54,7 +54,7 @@ categories:
 
 #### 修改效果
 
-![ie-home-page-url-recovery-success](/images/ie-home-page-url-recovery-success.png)
+![ie-home-page-url-recovery-success](ie-home-page-url-recovery-success.png)
 
 
 
