@@ -29,9 +29,9 @@ categories:
 
 ### 电子竞赛I组题目以及其要求
 
-![竞赛题目描述](/images/electronic-openmv-topic-description-01.png)
+![竞赛题目描述](electronic-openmv-topic-description-01.png)
 
-![竞赛题目要求](/images/electronic-openmv-topic-description-02.png)
+![竞赛题目要求](electronic-openmv-topic-description-02.png)
 
 ### 解决方案参考
 
