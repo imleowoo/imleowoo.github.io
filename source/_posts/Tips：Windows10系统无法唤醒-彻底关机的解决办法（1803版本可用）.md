@@ -67,5 +67,5 @@ categories:
 
 **具体操作如下：**
 
-![windows10-system-awake-operation](/images/windows10-system-awake-operation.png)
+![windows10-system-awake-operation](windows10-system-awake-operation.png)
 
