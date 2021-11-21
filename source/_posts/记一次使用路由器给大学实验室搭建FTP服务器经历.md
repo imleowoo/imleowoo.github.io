@@ -1,5 +1,6 @@
 ---
 title: 记一次使用路由器给大学实验室搭建FTP服务器经历
+description: 通过NEWIFI路由器刷Padavan固件后，实现FTP服务器、打印机共享以及校园网AP，实现校园网范围内的资源共享。
 date: 2017-10-05 18:01:00
 tags:
   - 网络
