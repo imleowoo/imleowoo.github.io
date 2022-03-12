@@ -1,6 +1,6 @@
 ---
 title: 浅谈Python线程安全
-description: GIL并不能保证线程安全，谈谈Python线程安全带来的问题，分析其造成原因以及如何去解决线程安全问题。
+description: GIL并不能保证线程安全，谈谈Python线程安全带来的问题现象，通过 dis.dis() 模块从字节码执行流程分析其造成原因。
 author: Leo
 date: 2022-03-10 00:00:00
 tags:
