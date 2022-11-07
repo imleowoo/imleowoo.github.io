@@ -1,6 +1,6 @@
 ---
-title: 布隆过滤器简述与实现
-description: 
+title: 布隆过滤器简述与Python实现
+description: 对比常见的简单单机去重方案，体现出Bit-Map用于去重时的优势和劣势以及其应用场景，进而引出空间效率高的概率型数据结构——布隆过滤器。对比布隆过滤器的关键指标对去重精度和内存影响。并借用公式使用Python bitarray实现了一个简易的布隆过滤器。
 author: Leo
 date: 2021-03-01 16:27:05
 mathjax: true
@@ -331,9 +331,7 @@ class BloomFilter:
 
 1. 博文：[爬虫如何去重？](http://jayden5.cn)
 2. 博文：[布隆过滤器](http://ruanhao.cc/blog/bloom_filter.html)
-
 3. 博文：[python-布隆过滤器](https://www.cnblogs.com/yscl/p/12003359.html)
-
 4. 工具：[**Bloom filter calculator**](https://hur.st/bloomfilter/)
 5. 文档：[Redis官网**SETBIT**](https://redis.io/commands/SETBIT)
 6. 博文：[Redis 中 BitMap 的使用场景](https://www.cnblogs.com/54chensongxia/p/13794391.html)
