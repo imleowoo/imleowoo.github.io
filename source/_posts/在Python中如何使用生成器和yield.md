@@ -36,7 +36,7 @@ categories:
 
 # 使用生成器
 
-在 [PEP 255](https://peps.python.org/pep-0255/) 中提出，生成器函数是一种特殊的函数，它会返回一个[惰性迭代器](https://en.wikipedia.org/wiki/Lazy_evaluation)。这些惰性迭代器对象可以像列表一样循环。然而和列表不同的事，惰性迭代器不会将其内容存储在内存中。有关Python迭代器的概述，可以看看这篇博客《**[Python "for" Loops (Definite Iteration)](https://realpython.com/python-for-loop/)**》。
+在 [PEP 255](https://peps.python.org/pep-0255/) 中提出，生成器函数是一种特殊的函数，它会返回一个[惰性迭代器](https://en.wikipedia.org/wiki/Lazy_evaluation)。这些惰性迭代器对象可以像列表一样循环。然而和列表不同的事，惰性迭代器不会将其内容存储在内存中。有关Python迭代器的概述，可以看看这篇博客《[**Python "for" Loops (Definite Iteration)**](https://realpython.com/python-for-loop/)》。
 
 大致了解了生成器的作用后，现在通过两个简单的例子来看看他是如何使用的。首先大致地了解生成器的工作原理，再认真剖析每一个示例。
 
@@ -289,7 +289,7 @@ def infinite_sequence():
 
 这种情况下可以看到，通过列表推导式得到的列表为87624 Bytes，而生成器对象只有 120 Bytes。产生的列表比生成器对象大 **700+** 倍！
 
-不过需要记得的是，如果列表大小小于机器的可用内存，列表推导式的计算速度可能比等效的生成器表达式更快（**[List comprehension vs generator expression's weird timeit results?](https://stackoverflow.com/questions/11964130/list-comprehension-vs-generator-expressions-weird-timeit-results)**）。为了搞清楚这一点，我们把上面的两个推导式结果相加求和，使用`cProfile.run()`输出运行情况。
+不过需要记得的是，如果列表大小小于机器的可用内存，列表推导式的计算速度可能比等效的生成器表达式更快（[**List comprehension vs generator expression's weird timeit results?**](https://stackoverflow.com/questions/11964130/list-comprehension-vs-generator-expressions-weird-timeit-results)）。为了搞清楚这一点，我们把上面的两个推导式结果相加求和，使用`cProfile.run()`输出运行情况。
 
 ```python
 >>> import cProfile
@@ -318,7 +318,7 @@ def infinite_sequence():
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
 ```
 
-从输出结果中可以看到，对列表推导式中的值求和用时 0.001 seconds，相比于生成器推导式求和用时0.003 seconds，只使用了**1/3**的时间。如果更加看重速度而内存不是一个限制的话，列表推导器或许会是更好的实现方式。
+从输出结果中可以看到，对列表推导式中的值求和用时 0.001s，相比于生成器推导式求和用时0.003s，只使用了**1/3**的时间。如果更加看重速度而内存不是一个限制的话，列表推导器或许会是更好的实现方式。
 
 > 注意：这些测试不仅对使用生成器推导式创建的生成器对象有效，对于生成器函数创建的生成器对象，也是一样的。因为生成的生成器是等效的。
 
