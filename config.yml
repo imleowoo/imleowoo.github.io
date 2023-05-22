@@ -68,9 +68,9 @@ params:
     # imageWidth: 120
     # imageHeight: 120
     buttons:
-      - name: 笔记
+      - name: 📝 笔记
         url: post
-      - name: 分类
+      - name: 🔖 分类
         url: categories
 
   homeInfoParams:
@@ -143,4 +143,3 @@ menu:
 #      SiteVerificationTag: "XYZabc"
 #    yandex:
 #      SiteVerificationTag: "XYZabc"
-
