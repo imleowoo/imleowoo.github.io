@@ -1,9 +1,9 @@
 baseURL: https://imleowoo.github.io/  # 站点地址
 languageCode: zh # 语言编码
 title: LEO'S NOTES  # 站点标题
-theme: "PaperMod" # 站点主题
+theme: PaperMod # 站点主题
 
-enableInlineShortcodes: true #
+enableInlineShortcodes: true
 enableRobotsTXT: true # 是否启用 robots.txt
 hasCJKLanguage: true # 自动检测是否包含 中文日文韩文
 buildDrafts: false # 是否生成标记为草稿的文章
@@ -23,11 +23,13 @@ outputs:
     - RSS
     - JSON
 
+
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   description: "做了一个梦，乱到讲不出来。"
   author: Leo
   # author: ["Me", "You"] # multiple authors
+  keywords: [ Blog, Note, life ]
 
   defaultTheme: auto
   # disableThemeToggle: true
@@ -38,11 +40,25 @@ params:
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: true
+  ShowWordCount: true
   ShowRssButtonInSectionTermList: true
   ShowToc: true # 显示目录
+  # UseHugoToc: true
   # TocOpen: true # 自动展开目录
   comments: true
+  hideSummary: false
   images: [ "papermod-cover.png" ]
+
+  assets:
+    # disableHLJS: true # to disable highlight.js
+    # disableFingerprinting: true
+    # favicon: "https://s.gravatar.com/avatar/b82c43aac27a4b77c9558be2c1748243?s=320" # 使用 Gravatar 的头像
+    favicon: "https://avatars.githubusercontent.com/u/33342014"
+    favicon16x16: "<link / abs url>"
+    favicon32x32: "<link / abs url>"
+    apple_touch_icon: "<link / abs url>"
+    safari_pinned_tab: "<link / abs url>"
+
 
   profileMode:
     enabled: true
@@ -52,10 +68,10 @@ params:
     # imageWidth: 120
     # imageHeight: 120
     buttons:
-      - name: Archives
-        url: archives
-      - name: Tags
-        url: tags
+      - name: 笔记
+        url: post
+      - name: 分类
+        url: categories
 
   homeInfoParams:
     Title: "LEO'S NOTES"
@@ -74,6 +90,57 @@ params:
     - name: Rss
       url: "index.xml"
 
-  assets:
-    disableHLJS: true
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: [ "title", "permalink", "summary", "content" ]
+
+
+menu:
+  main:
+    - identifier: home
+      name: 主页
+      url: /
+      weight: 10
+    - identifier: posts
+      name: 笔记
+      url: /posts/
+      weight: 20
+    - identifier: categories
+      name: 分类
+      url: /categories/
+      weight: 30
+    - identifier: tags
+      name: 标签
+      url: /tags/
+      weight: 40
+    - identifier: archives
+      name: 时间轴
+      url: /archives/
+      weight: 50
+    - identifier: about
+      name: 关于
+      url: /about/
+      weight: 60
+    #    - identifier: links
+    #      name: 友链
+    #      url: /links/
+    #      weight: 60
+    - identifier: search
+      name: 搜索 🔍
+      url: /search/
+      weight: 100
+
+
+#  analytics:
+#    google:
+#      SiteVerificationTag: "XYZabc"
+#    bing:
+#      SiteVerificationTag: "XYZabc"
+#    yandex:
+#      SiteVerificationTag: "XYZabc"
 
