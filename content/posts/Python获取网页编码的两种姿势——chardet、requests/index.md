@@ -37,4 +37,3 @@ In[5]: html = urlopen(url).read()
 In[6]: print(chardet.detect(html))
 {'encoding': 'utf-8', 'confidence': 0.99, 'language': ''}
 ```
-

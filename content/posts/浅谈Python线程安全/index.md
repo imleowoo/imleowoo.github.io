@@ -23,7 +23,7 @@ Python中通过`GIL（Global Interpreter Lock）`这种互斥锁（`mutual-exclu
 >
 > ```python
 > import sys
-> 
+>
 > sys.getrefcount(obj)
 > ```
 
@@ -168,7 +168,7 @@ count = 0
 def add_count():
     global count
     count += 1
-    
+
 if __name__ == '__main__':
     from dis import dis
 
@@ -236,25 +236,25 @@ lock.locked() # bool 查看当前线程锁状态
 
    ```python
    import threading
-   
+
    lock = threading.Lock()
-   
+
    lock.acquire()  # 加锁
    try:
        print('do something')
    finally:
        lock.release()
-       
+
    ```
 
 2. **`with`模式**
 
    ```python
    import threading
-   
+
    lock = threading.Lock()
-   
-   # 可以观察到 Lock 类中 
+
+   # 可以观察到 Lock 类中
    # __enter__ 会执行 lock.acquire()
    # __exit__ 会执行 lock.release()
    with lock:
@@ -313,4 +313,3 @@ if __name__ == '__main__':
 2. [Python 字节码反汇编器](https://docs.python.org/zh-cn/3/library/dis.html)
 2. [threading --- 基于线程的并行](https://docs.python.org/zh-cn/3.8/library/threading.html)
 2. [通俗易懂：说说 Python 里的线程安全、原子操作 ](https://www.cnblogs.com/wongbingming/p/12892927.html)
-

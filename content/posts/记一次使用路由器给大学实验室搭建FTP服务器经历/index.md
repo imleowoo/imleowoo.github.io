@@ -216,7 +216,7 @@ OpenWRT最大的优点也恰恰是其最大的缺点，灵活性强但是导致�
    ```bash
    root@newifi:~# df -h       # 查看当前分区挂载情况，以及个分区容量
    ```
-   
+
    ![U盘挂载](ftp-newifi-device-mount.png)
 
 其中`/mnt/sda4`就是我们的挂载分区，在不同的主机上可能显示的会有所差异，我们可以根绝显示的容量来判断挂载分区，例如我的U盘是16GB。
@@ -231,12 +231,12 @@ root@newifi:/mnt/sda4#  mtd write NEWIFI-D1_3.4.3.9-099_20170910-2347.trx firmwa
 
 ![ftp-newifi-write-firmware](ftp-newifi-write-firmware.png)
 
-敲击回车开始执行后，会有`w`光标来回闪烁，说明正在执行刷入固件操作，然后等待刷入结束，耗时大约2-3min。 
+敲击回车开始执行后，会有`w`光标来回闪烁，说明正在执行刷入固件操作，然后等待刷入结束，耗时大约2-3min。
 
 光标停止`w`闪烁，并可以重新键入命令时，则说明刷机已完成。然后执行重启命令。
 
 ```bash
-root@newifi:~# reboot	
+root@newifi:~# reboot
 ```
 
 上面的重启命令执行之后，当前所连接的SSH登录会断开，路由器会重启。第一次启动路由会比较慢，重启时间大概2-3分钟，我们可以根据路由器指示灯判断现在路由器的工作状态。
@@ -275,7 +275,7 @@ root@newifi:~# reboot
 
    ![Windows网络信息](ftp-newifi-windows-network-config.png)
 
-   
+
 
 **Padavan的管理用户名默认是admin，默认密码是admin**，登录成功后便是路由器后台管理界面。
 

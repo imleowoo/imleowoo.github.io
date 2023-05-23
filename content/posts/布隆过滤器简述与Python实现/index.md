@@ -24,43 +24,43 @@ categories:
 假设用户量级约1亿，即10 ^ 8个用户`uid`，且`uid`字符串长度不可控。
 
 1. 利用数据库唯一性索引
-   
+
     如MySQL `primary key`、`unique key`。但是往往会涉及磁盘的持久化，导致读写效率底下。
-    
+
 2. 基于内存的哈希表（HashSet、HashMap）
-   
+
     为了解决第1点中读写效率问题，直接将`uid`添加至Set中，基于内存+复杂度O(1)，使得读写效率高。
-    
+
     但是`uid`字符串长度不可控，如`uid="MS4wLjABAAAAlwXCzzm7SmBfdZAsqQ_wVVUbpTvUSX1WC_x8HAjMa3gLb88-MwKL7s4OqlYntX4r"`，该uid约75个字符串，其中`uid`字符串全以ASCII码组成。`uid`长度以75个字符来计算，一个`uid`至少占用75个字节（忽略集合中的`hash(obj)`等其它内存消耗），将会占用约7GB左右内存。如果`uid`是更长的字符串或者去重对象为中文等单个字符占用多个字节的字符串，将会占用更多内存资源。
-    
+
 3. 经摘要算法后再去重（MD5、SHA1、SHA512）
-   
+
     为了解决第2点中的去重对象占用资源过大，空间利用率不高的问题，可加入哈希算法将任意长度字符串转换成一个固定长度的字符串。
-    
+
     以MD5摘要算法为例，计算第2点中相同的`uid`的MD5哈希值。
-    
+
     ```python
     import hashlib
-    
+
     md5 = hashlib.md5()
-    
+
     uid = "MS4wLjABAAAAlwXCzzm7SmBfdZAsqQ_wVVUbpTvUSX1WC_x8HAjMa3gLb88-MwKL7s4OqlYntX4r"
     md5.update(uid.encode())
-    
+
     # hexdigest()返回的是十六进制的字符串表达形式
     uid_hex = md5.hexdigest()
-    
+
     >>> uid_hex = "27f8298a7c8d148a815d1084cd289374"
     ```
-    
+
     通常计算结果`uid_hex`以一个32个字节的16进制字符串表示，即经过哈希计算后只占用空间为128bit，单个哈希占用内存16个字节。10^8个用户`uid`将占用内存约1.5GB，虽然相比第2点内存占用减少了78%。但是内存占用较多。
-    
+
 4. BitMap算法，通过bit位来映射对象的状态
-   
+
     申请一段给定长度bitmaps，如果 `hash(uid)` 的结果为0829，则将bitmaps的第0829位状态置为1，表示该`uid`已经存在。
-    
+
     使用BitMap算法可以节省大量的内存，但是单一的哈希函数发生冲突的概率太高。
-    
+
 
 ## BitMap
 
@@ -84,7 +84,7 @@ Bit（位）- Map（图）
 
 > Redis 其实只支持 5 种数据类型，并没有 BitMap 这种类型，BitMap 底层是基于 Redis 的字符串类型实现的。同时也受到动态字符串最大长度512M的限制。
 Redis中BitMap的基础操作SETBIT和GETBIT是在Redis version ≥ 2.2.0 提供的。
-> 
+>
 
 需要记录和查询某一用户`uid=”leowoo”`过去一年中的签到情况。
 
@@ -190,17 +190,17 @@ k = round((m / n) * log(2))
 各项参数关系坐标图如下
 
 1. 误判率p与样本容量n关系
-   
+
     ![p-vs-n](p_vs_n.png)
-    
+
 2. 误判率p与容量位数m关系
-   
+
     ![p-vs-m](p_vs_m.png)
-    
+
 3. 误判率p与哈希函数k关系
-   
+
     ![p-vs-k](p_vs_k.png)
-    
+
 
 ## 代码实现
 
@@ -336,4 +336,3 @@ class BloomFilter:
 5. 文档：[Redis官网**SETBIT**](https://redis.io/commands/SETBIT)
 6. 博文：[Redis 中 BitMap 的使用场景](https://www.cnblogs.com/54chensongxia/p/13794391.html)
 7. 博文：[BitMap的原理以及运用](https://www.cnblogs.com/dragonsuc/p/10993938.html)
-

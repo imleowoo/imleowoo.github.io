@@ -115,7 +115,7 @@ while True:
     clock.tick()
     img = sensor.snapshot()  # 获取当期所采集到的图像快照
     # 设置色块阈值，具体数值情况可以通过OpenMVIDE中的阈值调整功能来得出
-    # 工具 → Mechine Vision → Threshold Editor 
+    # 工具 → Mechine Vision → Threshold Editor
     # area_threshold面积阈值设置为100 ，如果色块被面积小于100，则会被过滤掉
     # pixels_threshold 像素个数阈值，如果色块像素数量小于这个值，会被过滤掉
     # merge 设置为True，合并所有重叠的寻找到的blob为一个色块
@@ -169,7 +169,7 @@ while True:
 #define Buf_Max 80
 
 #define GPS_Buffer_Length 80
-#define gpsRxBufferLength  76 
+#define gpsRxBufferLength  76
 
 #define false 0
 #define true 1
@@ -179,7 +179,7 @@ sbit led2 = P1^2;
 
 bit flag = 1;
 
-typedef struct SaveData 
+typedef struct SaveData
 {
 	char GPS_Buffer[GPS_Buffer_Length];
 	char isGetData;		//是否获取到GPS数据
@@ -220,7 +220,7 @@ void main()
 	lcd_init();
 	flag = 0;
   while(1)
-	{   
+	{
 		printfGps();
 //		write_cmd(0x01);
   }
@@ -230,11 +230,11 @@ void sint() interrupt 4
 {
 	ES=0;
 	if(RI == 1 && flag == 0)
-	{	
+	{
 		RI=0;
 		tempr=SBUF;
-		
-		if(tempr == '\n')									   
+
+		if(tempr == '\n')
 		{
 			memset(Save_Data.GPS_Buffer, 0, GPS_Buffer_Length);      //清空
 			memcpy(Save_Data.GPS_Buffer, gpsRxBuffer, RX_Count); 	//保存数据
@@ -246,7 +246,7 @@ void sint() interrupt 4
 		else
 		{
 			gpsRxBuffer[RX_Count++] = tempr;
-		}		
+		}
 	}
 	ES=1;
 }
@@ -260,6 +260,3 @@ void sint() interrupt 4
 发现写博客虽然对巩固知识很有帮助，但是也确实是一件费时费力的事情。
 
 本来计划详细讲解一下过程，分享一下经验，但马上要出学校开始找工作了，觉得时间完全不够用啊。包括写这篇博文记录一下，中间也是跨了一个多月的时间才重新总结，所以想想先把分析思路和主要代码贴出来，关于更多具体的分析，就不再赘述了。
-
-
-
