@@ -69,7 +69,7 @@ params:
     # imageHeight: 120
     buttons:
       - name: 📝 笔记
-        url: post
+        url: posts
       - name: 🔖 分类
         url: categories
 
