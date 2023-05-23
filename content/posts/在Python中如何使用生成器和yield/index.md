@@ -3,7 +3,7 @@ title: （译）在Python中如何使用生成器和yield
 description: 翻译自RealPython教程。教程中通过回文数字生成展示了如何使用Python生成器和生成器表达式；在PEP-342 yield 升级为表达式后如何使用send、throw、close方法来与生成器交互；以及如何构建生成器管道来高效处理大型数据集。
 date: 2022-09-28 18:00:00
 author: Leo
-tags: 
+tags:
   - Python
   - 生成器
   - Generator
