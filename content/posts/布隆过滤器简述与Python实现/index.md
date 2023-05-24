@@ -147,25 +147,17 @@ BITCOUNT leowoo 20210101 20211231
 
 误判率计算公式：
 
-```tex
-$p=\left(1-e^\frac{-kn}{m}\right)$
-```
+$$ p=\left(1-e^\frac{-kn}{m}\right) $$
 
 ### bit位数m
 
 已知误判率p，数据规模n，则bit位数m可以通过以下公式计算得到：
 
-```tex
-$m=-\frac{nlnp}{{(ln2)}^2}$
-```
+$$ m=-\frac{nlnp}{{(ln2)}^2} $$
 
 ### 哈希函数个数k
 
-```tex
-$k=\frac{m}{n}ln2$
-```
-
-
+$$ k=\frac{m}{n}ln2 $$
 
 ### 示例
 
