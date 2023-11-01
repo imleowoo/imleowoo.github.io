@@ -10,7 +10,7 @@ repos:
       - id: mixed-line-ending # 检查结束符，使用Unix LF
       - id: trailing-whitespace # 取消行尾无关紧要的空格
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 3.10.0
+    rev: 3.12.0
     hooks:
       - id: commitizen
         stages: [ commit-msg ]
