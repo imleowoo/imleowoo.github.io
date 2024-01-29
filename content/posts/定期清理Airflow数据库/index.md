@@ -15,7 +15,8 @@ categories:
 
 # 运行环境
 
-> - 操作系统：Darwin LEIdeMacBookPro.lan 23.0.0 Darwin Kernel Version 23.0.0: Fri Sep 15 14:41:43 PDT 2023; root:xnu-10002.1.13~1/RELEASE_ARM64_T6000 arm64
+> - 操作系统：Darwin LEIdeMacBookPro.lan 23.0.0 Darwin Kernel Version 23.0.0: Fri Sep 15 14:41:43 PDT 2023; root:
+    xnu-10002.1.13~1/RELEASE_ARM64_T6000 arm64
 > - Python版本：Python 3.10.9 (main, Jan 31 2023, 16:44:05) [Clang 14.0.0 (clang-1400.0.29.202)] on darwin
 > - Airflow版本：2.6.2
 > - Airflow Database Backend: MySQL 5.7
@@ -24,7 +25,8 @@ categories:
 
 我所在的项目使用 airflow 作为任务调度器。
 其中活跃的Active DAGs有400+，并且大部分DAGs的调度间隔都小于一小时。频繁的任务和大量的task使得运行一个月数据库就能产生超过10GB的数据。
-数据库数据量增大后，出现了以下问题： 
+数据库数据量增大后，出现了以下问题：
+
 1. 访问 airflow webserver 时页面响应缓慢；
 2. 查询量过大，在极端情况下直接导致MySQL实例发生OOM。
 
@@ -33,6 +35,19 @@ categories:
 # 清理 airflow 数据库
 
 # airflow 数据表
+
+airflow 安装完成后，参考文档 [Quick Start](https://airflow.apache.org/docs/apache-airflow/stable/start.html) 使用以下命令完成
+airflow 的依赖初始化后，会在`sql_alchemy_conn`绑定的数据库实例下创建多张数据表。
+
+```shell
+# 该命令初始化数据库、创建用户和启动所有组件
+$ airflow standalone
+
+# 或只初始化数据库
+$ airflow db init
+```
+
+以当前所用的airflow为例，数据库初始化完成后，会产生以下数据表。各数据表名和作用如下
 
 ```text
 mysql> use airflow;
