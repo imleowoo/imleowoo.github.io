@@ -1,6 +1,6 @@
 ---
 title: Python获取网页编码的两种姿势——chardet、requests
-description: Python开发中通常使用自带的urllib模块和第三方requests模块来发起HTTP请求。请求响应结果输出可能会出现页面乱码的情况，通常是因为编码格式不匹配造成的，一般匹配好HTML文件的编码格式就可解决乱码问题。urllib和requests都提供了获取页面编码格式的函数，看看其分别如何使用。
+summary: Python开发中通常使用自带的urllib模块和第三方requests模块来发起HTTP请求。请求响应结果输出可能会出现页面乱码的情况，通常是因为编码格式不匹配造成的，一般匹配好HTML文件的编码格式就可解决乱码问题。urllib和requests都提供了获取页面编码格式的函数，看看其分别如何使用。
 author: Leo
 date: 2017-12-12 16:57:22
 tags:

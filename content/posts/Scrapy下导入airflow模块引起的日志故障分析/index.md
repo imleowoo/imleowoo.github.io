@@ -1,7 +1,7 @@
 ---
 title: "Scrapy下导入airflow模块引起的日志故障分析"
 date: 2024-08-15T00:46:56+08:00
-description: "在Scrapy项目中导入airflow模块后，日志输出出现异常，主要表现为重复记录和不同的日志级别。分析发现，airflow的日志配置与Scrapy的根日志记录器配置冲突，导致日志处理流程受到影响。最终，重复输出的原因是两个项目级别的日志配置混合在一起，影响了日志的处理效率和输出格式。"
+summary: "在Scrapy项目中导入airflow模块后，日志输出出现异常，主要表现为重复记录和不同的日志级别。分析发现，airflow的日志配置与Scrapy的根日志记录器配置冲突，导致日志处理流程受到影响。最终，重复输出的原因是两个项目级别的日志配置混合在一起，影响了日志的处理效率和输出格式。"
 author: Leo
 tags:
   - 故障
@@ -212,7 +212,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 ```
 
-此外，因为日志记录器具有层级结构，以dot `.` 符号进行分割，例如记录器名`a.b.c`的父级是`a.b`，再上一父级则是 `a`。
+此外，因为日志记录器具有层级结构，以 dot `.` 符号进行分割，例如记录器名`a.b.c`的父级是`a.b`，再上一父级则是 `a`。
 
 当 `logger` 创建的 `LogRecord` 对象传递给 `handlers` 处理时，首先会查找当前 `logger` 所绑定的 `handlers`。
 如果当前 `logger` 未绑定任意 `handlers`，且 `logger.propagate` 为真时（默认为真），会递归向父级 `logger` 进行查找可用的
@@ -282,8 +282,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 2. 在 `scrapy crawl` 的启动日志中，看到设定日志级别 `LOG_LEVEL='INFO'`，而输出了 `DEBUG` 级别的日志，推测不同的 `handlers`
    之间设定了不同的日志等级。
 3. 输出控制台的颜色不一样，`INFO` 级别是白色，`DEBUG` 级别是绿色。可以推测出的两个方向：
-    - 存在两个类似于 `StreamHandler`，可能是其中一个以 `stdout` 输出，另一个以 `stderr` 输出。
-    - 存在一个 `StreamHandler`，但是在 `formatter` 中针对不同的日志级别设定了不同的颜色。
+   - 存在两个类似于 `StreamHandler`，可能是其中一个以 `stdout` 输出，另一个以 `stderr` 输出。
+   - 存在一个 `StreamHandler`，但是在 `formatter` 中针对不同的日志级别设定了不同的颜色。
 
 ### 现象验证
 
@@ -318,10 +318,11 @@ root_logger 绑定的 handlers： [<LogCounterHandler (INFO)>, <StreamHandler <s
 `root_logger`
 会作为默认配置，所以会使用根记录 `root_logger` 所绑定的 `handlers`。
 
-此时 Scrapy 项目的 `root_logger` 已经有两个 `handlers`，再进一步分析一下每一个 `handler` 的作用。
+此时 Scrapy 项目的 `root_logger` 已经有两个 `handlers`，再进一步分析每一个 `handler` 的作用。
 
 1. **`LogCounterHandler`**：重写了 `emit()` 方法，来实现了爬虫运行过程中各日志等级的统计，并不会将日志记录 `log_record`
    输出至终端。
+
    ```python
    class LogCounterHandler(logging.Handler):
        """Record log levels count into a crawler stats"""
@@ -407,7 +408,7 @@ DEFAULT_LOGGING_CONFIG = {
 }
 ```
 
-Python代码的执行流程，当导入某一个模块时，会执行其模块下的 `__init__.py` 的代码。
+Python 代码的执行流程，当导入某一个模块时，会执行其模块下的 `__init__.py` 的代码。
 所以当在项目代码中执行 `import airflow` 时，会执行 `airflow/__init__.py` 的代码，其中会涉及配置文件的初始化操作。
 
 ```python
@@ -459,7 +460,7 @@ Scrapy 启动时也进行了根日志记录器 `root_logger` 的项目级别日�
   `handler.emit()`
   完成对日志记录的处理。
 
-所以当设定的过滤日志升高时，会减少日志的处理流程，让出更多计算资源给主程序核心功能部分。
+所以当设定的过滤日志等级提高时，会减少日志的处理流程，让出更多计算资源给主程序核心功能部分。
 
 # 参考
 
