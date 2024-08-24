@@ -1,7 +1,7 @@
 ---
 title: "Scrapy下导入airflow模块引起的日志故障分析"
 date: 2024-08-15T00:46:56+08:00
-description: "在Scrapy项目中导入airflow模块后，日志输出出现异常，主要表现为重复记录和不同的日志级别。分析发现，airflow的日志配置与Scrapy的根日志记录器配置冲突，导致日志处理流程受到影响。最终，重复输出的原因是两个项目级别的日志配置混合在一起，影响了日志的处理效率和输出格式。"
+summary: "在Scrapy项目中导入airflow模块后，日志输出出现异常，主要表现为重复记录和不同的日志级别。分析发现，airflow的日志配置与Scrapy的根日志记录器配置冲突，导致日志处理流程受到影响。最终，重复输出的原因是两个项目级别的日志配置混合在一起，影响了日志的处理效率和输出格式。"
 author: Leo
 tags:
   - 故障
@@ -318,7 +318,7 @@ root_logger 绑定的 handlers： [<LogCounterHandler (INFO)>, <StreamHandler <s
 `root_logger`
 会作为默认配置，所以会使用根记录 `root_logger` 所绑定的 `handlers`。
 
-此时 Scrapy 项目的 `root_logger` 已经有两个 `handlers`，再进一步分析一下每一个 `handler` 的作用。
+此时 Scrapy 项目的 `root_logger` 已经有两个 `handlers`，再进一步分析每一个 `handler` 的作用。
 
 1. **`LogCounterHandler`**：重写了 `emit()` 方法，来实现了爬虫运行过程中各日志等级的统计，并不会将日志记录 `log_record`
    输出至终端。
@@ -460,7 +460,7 @@ Scrapy 启动时也进行了根日志记录器 `root_logger` 的项目级别日�
   `handler.emit()`
   完成对日志记录的处理。
 
-所以当设定的过滤日志升高时，会减少日志的处理流程，让出更多计算资源给主程序核心功能部分。
+所以当设定的过滤日志等级提高时，会减少日志的处理流程，让出更多计算资源给主程序核心功能部分。
 
 # 参考
 

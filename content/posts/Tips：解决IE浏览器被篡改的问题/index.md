@@ -1,6 +1,6 @@
 ---
 title: Tips：解决IE浏览器被篡改的问题
-description: Windows下所有浏览器主页被篡改，与直接修改Internet选项中的主页不同。这次是创建了一个 应用+主页URL 的快捷方式。
+summary: Windows下所有浏览器主页被篡改，与直接修改Internet选项中的主页不同。这次是创建了一个 应用+主页URL 的快捷方式。
 date: 2017-10-07 16:34:48
 tags:
   - 流氓软件
