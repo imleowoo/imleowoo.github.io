@@ -21,70 +21,68 @@ categories:
 
 ## 常见去重方案
 
-假设用户量级约1亿，即10 ^ 8个用户`uid`，且`uid`字符串长度不可控。
+假设用户量级约 1 亿，即 10 ^ 8 个用户`uid`，且`uid`字符串长度不可控。
 
 1. 利用数据库唯一性索引
 
-    如MySQL `primary key`、`unique key`。但是往往会涉及磁盘的持久化，导致读写效率底下。
+   如 MySQL `primary key`、`unique key`。但是往往会涉及磁盘的持久化，导致读写效率底下。
 
 2. 基于内存的哈希表（HashSet、HashMap）
 
-    为了解决第1点中读写效率问题，直接将`uid`添加至Set中，基于内存+复杂度O(1)，使得读写效率高。
+   为了解决第 1 点中读写效率问题，直接将`uid`添加至 Set 中，基于内存+复杂度 O(1)，使得读写效率高。
 
-    但是`uid`字符串长度不可控，如`uid="MS4wLjABAAAAlwXCzzm7SmBfdZAsqQ_wVVUbpTvUSX1WC_x8HAjMa3gLb88-MwKL7s4OqlYntX4r"`，该uid约75个字符串，其中`uid`字符串全以ASCII码组成。`uid`长度以75个字符来计算，一个`uid`至少占用75个字节（忽略集合中的`hash(obj)`等其它内存消耗），将会占用约7GB左右内存。如果`uid`是更长的字符串或者去重对象为中文等单个字符占用多个字节的字符串，将会占用更多内存资源。
+   但是`uid`字符串长度不可控，如`uid="MS4wLjABAAAAlwXCzzm7SmBfdZAsqQ_wVVUbpTvUSX1WC_x8HAjMa3gLb88-MwKL7s4OqlYntX4r"`，该 uid 约 75 个字符串，其中`uid`字符串全以 ASCII 码组成。`uid`长度以 75 个字符来计算，一个`uid`至少占用 75 个字节（忽略集合中的`hash(obj)`等其它内存消耗），将会占用约 7GB 左右内存。如果`uid`是更长的字符串或者去重对象为中文等单个字符占用多个字节的字符串，将会占用更多内存资源。
 
 3. 经摘要算法后再去重（MD5、SHA1、SHA512）
 
-    为了解决第2点中的去重对象占用资源过大，空间利用率不高的问题，可加入哈希算法将任意长度字符串转换成一个固定长度的字符串。
+   为了解决第 2 点中的去重对象占用资源过大，空间利用率不高的问题，可加入哈希算法将任意长度字符串转换成一个固定长度的字符串。
 
-    以MD5摘要算法为例，计算第2点中相同的`uid`的MD5哈希值。
+   以 MD5 摘要算法为例，计算第 2 点中相同的`uid`的 MD5 哈希值。
 
-    ```python
-    import hashlib
+   ```python
+   import hashlib
 
-    md5 = hashlib.md5()
+   md5 = hashlib.md5()
 
-    uid = "MS4wLjABAAAAlwXCzzm7SmBfdZAsqQ_wVVUbpTvUSX1WC_x8HAjMa3gLb88-MwKL7s4OqlYntX4r"
-    md5.update(uid.encode())
+   uid = "MS4wLjABAAAAlwXCzzm7SmBfdZAsqQ_wVVUbpTvUSX1WC_x8HAjMa3gLb88-MwKL7s4OqlYntX4r"
+   md5.update(uid.encode())
 
-    # hexdigest()返回的是十六进制的字符串表达形式
-    uid_hex = md5.hexdigest()
+   # hexdigest()返回的是十六进制的字符串表达形式
+   uid_hex = md5.hexdigest()
 
-    >>> uid_hex = "27f8298a7c8d148a815d1084cd289374"
-    ```
+   >>> uid_hex = "27f8298a7c8d148a815d1084cd289374"
+   ```
 
-    通常计算结果`uid_hex`以一个32个字节的16进制字符串表示，即经过哈希计算后只占用空间为128bit，单个哈希占用内存16个字节。10^8个用户`uid`将占用内存约1.5GB，虽然相比第2点内存占用减少了78%。但是内存占用较多。
+   通常计算结果`uid_hex`以一个 32 个字节的 16 进制字符串表示，即经过哈希计算后只占用空间为 128bit，单个哈希占用内存 16 个字节。10^8 个用户`uid`将占用内存约 1.5GB，虽然相比第 2 点内存占用减少了 78%。但是内存占用较多。
 
-4. BitMap算法，通过bit位来映射对象的状态
+4. BitMap 算法，通过 bit 位来映射对象的状态
 
-    申请一段给定长度bitmaps，如果 `hash(uid)` 的结果为0829，则将bitmaps的第0829位状态置为1，表示该`uid`已经存在。
+   申请一段给定长度 bitmaps，如果 `hash(uid)` 的结果为 0829，则将 bitmaps 的第 0829 位状态置为 1，表示该`uid`已经存在。
 
-    使用BitMap算法可以节省大量的内存，但是单一的哈希函数发生冲突的概率太高。
-
+   使用 BitMap 算法可以节省大量的内存，但是单一的哈希函数发生冲突的概率太高。
 
 ## BitMap
 
 Bit（位）- Map（图）
 
-基本原理是使用一个比特bit位来映射某个元素的状态，由于一个比特位只能表示 0 和 1 两种状态，通常用于判断该元素的是与否状态，如用户是否存在。
+基本原理是使用一个比特 bit 位来映射某个元素的状态，由于一个比特位只能表示 0 和 1 两种状态，通常用于判断该元素的是与否状态，如用户是否存在。
 
 ### 优势
 
-1. 单个状态只占用一个bit，非常省空间；
-2. 读写某一状态位时操作时间复杂度为O(1)，操作效率高；
+1. 单个状态只占用一个 bit，非常省空间；
+2. 读写某一状态位时操作时间复杂度为 O(1)，操作效率高；
 
 ### 劣势
 
-1. 一个bit位表示的信息有限，只有0和1两种状态；
-2. 读取某段状态位操作时间复杂度为O(n)；
+1. 一个 bit 位表示的信息有限，只有 0 和 1 两种状态；
+2. 读取某段状态位操作时间复杂度为 O(n)；
 
 ### 示例
 
-以Redis BitMap为例，
+以 Redis BitMap 为例，
 
-> Redis 其实只支持 5 种数据类型，并没有 BitMap 这种类型，BitMap 底层是基于 Redis 的字符串类型实现的。同时也受到动态字符串最大长度512M的限制。
-Redis中BitMap的基础操作SETBIT和GETBIT是在Redis version ≥ 2.2.0 提供的。
->
+> Redis 其实只支持 5 种数据类型，并没有 BitMap 这种类型，BitMap 底层是基于 Redis 的字符串类型实现的。同时也受到动态字符串最大长度 512M 的限制。
+> Redis 中 BitMap 的基础操作 SETBIT 和 GETBIT 是在 Redis version ≥ 2.2.0 提供的。
 
 需要记录和查询某一用户`uid=”leowoo”`过去一年中的签到情况。
 
@@ -102,21 +100,21 @@ BITCOUNT leowoo
 BITCOUNT leowoo 20210101 20211231
 ```
 
-一年以365天，一个用户的统计情况将占用 365 bits，即45.6 Bytes，占用内存资源极低。
+一年以 365 天，一个用户的统计情况将占用 365 bits，即 45.6 Bytes，占用内存资源极低。
 
 # 布隆过滤器
 
 ## 描述
 
-布隆过滤器的本质是一个BitMap，创建布隆过滤器 bloom filter 的位数图时，会申请一个固定长度为`m`个比特位的数组array，array中每个bit位都被初始化为0。
+布隆过滤器的本质是一个 BitMap，创建布隆过滤器 bloom filter 的位数图时，会申请一个固定长度为`m`个比特位的数组 array，array 中每个 bit 位都被初始化为 0。
 
-与上面提到的BitMap去重方法类似，不过为了减少单一的哈希函数带来的哈希冲突，布隆过滤器中加入了`k`个哈希函数，并且每个哈希函数的输出结果`i`在 `0～m-1` 之间，因为需要将结果i映射到array的第i位上，并且将第`i`位置为1。
+与上面提到的 BitMap 去重方法类似，不过为了减少单一的哈希函数带来的哈希冲突，布隆过滤器中加入了`k`个哈希函数，并且每个哈希函数的输出结果`i`在 `0～m-1` 之间，因为需要将结果 i 映射到 array 的第 i 位上，并且将第`i`位置为 1。
 
 布隆过滤器是一个空间效率高的概率型数据结构，可以用来判断一个元素**一定不存在**或者**可能存在**。
 
 ### 关键指标
 
-- m：bit位个数（即容量）
+- m：bit 位个数（即容量）
 - k：哈希函数的个数
 - n：用于去重的数据规模
 - p：误判率
@@ -124,7 +122,7 @@ BITCOUNT leowoo 20210101 20211231
 ### 优势
 
 1. 空间效率高，占用空间小。
-2. 插入和查询效率高，读写时间复杂度均为O(k)。
+2. 插入和查询效率高，读写时间复杂度均为 O(k)。
 
 ### 劣势
 
@@ -137,25 +135,25 @@ BITCOUNT leowoo 20210101 20211231
 布隆过滤器提升准确率的两个姿势：
 
 1. 适当增加哈希函数，增大随机性，减少哈希碰撞的概率。
-2. 扩大数组范围，使hash值均匀分布，进一步减少hash碰撞的概率。
+2. 扩大数组范围，使 hash 值均匀分布，进一步减少 hash 碰撞的概率。
 
 ![m-n-k 误判率](m_n_k.png)
 
-### 误判率p
+### 误判率 p
 
-误判率p受三个因素影响：bit位的容量m，哈希函数的个数k，数据规模n
+误判率 p 受三个因素影响：bit 位的容量 m，哈希函数的个数 k，数据规模 n
 
 误判率计算公式：
 
 $$ p=\left(1-e^\frac{-kn}{m}\right) $$
 
-### bit位数m
+### bit 位数 m
 
-已知误判率p，数据规模n，则bit位数m可以通过以下公式计算得到：
+已知误判率 p，数据规模 n，则 bit 位数 m 可以通过以下公式计算得到：
 
 $$ m=-\frac{nlnp}{{(ln2)}^2} $$
 
-### 哈希函数个数k
+### 哈希函数个数 k
 
 $$ k=\frac{m}{n}ln2 $$
 
@@ -181,22 +179,21 @@ k = round((m / n) * log(2))
 
 各项参数关系坐标图如下
 
-1. 误判率p与样本容量n关系
+1. 误判率 p 与样本容量 n 关系
 
-    ![p-vs-n](p_vs_n.png)
+   ![p-vs-n](p_vs_n.png)
 
-2. 误判率p与容量位数m关系
+2. 误判率 p 与容量位数 m 关系
 
-    ![p-vs-m](p_vs_m.png)
+   ![p-vs-m](p_vs_m.png)
 
-3. 误判率p与哈希函数k关系
+3. 误判率 p 与哈希函数 k 关系
 
-    ![p-vs-k](p_vs_k.png)
-
+   ![p-vs-k](p_vs_k.png)
 
 ## 代码实现
 
-### 使用Python `bitarray` 实现
+### 使用 Python `bitarray` 实现
 
 ```python
 from math import ceil, log
@@ -323,8 +320,8 @@ class BloomFilter:
 
 1. 博文：[爬虫如何去重？](http://jayden5.cn)
 2. 博文：[布隆过滤器](http://ruanhao.cc/blog/bloom_filter.html)
-3. 博文：[python-布隆过滤器](https://www.cnblogs.com/yscl/p/12003359.html)
-4. 工具：[**Bloom filter calculator**](https://hur.st/bloomfilter/)
-5. 文档：[Redis官网**SETBIT**](https://redis.io/commands/SETBIT)
+3. 博文：[Python-布隆过滤器](https://www.cnblogs.com/yscl/p/12003359.html)
+4. 工具：[Bloom filter calculator](https://hur.st/bloomfilter/)
+5. 文档：[Redis 官网 SETBIT](https://redis.io/commands/SETBIT)
 6. 博文：[Redis 中 BitMap 的使用场景](https://www.cnblogs.com/54chensongxia/p/13794391.html)
-7. 博文：[BitMap的原理以及运用](https://www.cnblogs.com/dragonsuc/p/10993938.html)
+7. 博文：[BitMap 的原理以及运用](https://www.cnblogs.com/dragonsuc/p/10993938.html)

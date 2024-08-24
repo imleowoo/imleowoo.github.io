@@ -1,6 +1,6 @@
 ---
 title: "豆瓣书影音报告——2022年度"
-author: [ "Leo" ]
+author: ["Leo"]
 date: 2023-01-01T00:00:00+08:00
 lastmod: 2024-01-30T00:00:00+08:00
 draft: false
