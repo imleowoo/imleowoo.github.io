@@ -2,7 +2,7 @@ exclude:
   public
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
       - id: check-yaml  # 检查yaml文件
       - id: end-of-file-fixer # 文本文件是否以换行符结束
@@ -10,7 +10,7 @@ repos:
       - id: mixed-line-ending # 检查结束符，使用Unix LF
       - id: trailing-whitespace # 取消行尾无关紧要的空格
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.29.0
+    rev: v4.9.1
     hooks:
       - id: commitizen
         stages: [ commit-msg ]
