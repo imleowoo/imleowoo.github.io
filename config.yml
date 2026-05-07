@@ -1,5 +1,6 @@
 baseURL: https://imleowoo.github.io/  # 站点地址
-languageCode: zh # 语言编码
+ignoreLogs: ['warning-goldmark-raw-html']
+locale: zh # 语言编码
 title: LEO'S NOTES  # 站点标题
 theme: PaperMod # 站点主题
 
