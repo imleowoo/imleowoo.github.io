@@ -92,8 +92,8 @@ out: 1713528
 分析造成的线程不安全的原因，其中`count+=1`这一步操作可以拆分为两步。
 
 ```python
-temp = count + 1 # 第 1 步
-count = temp	# 第 2 步
+temp = count + 1  # 第 1 步
+count = temp  # 第 2 步
 ```
 
 若某线程 A 在执行完第一步时发生了线程切换，此时临时变量`temp`会保存到该线程的上下文中，此后别的线程也进行了类似的操作。当该线程 A 拿到再次拿到 GIL 后，从上下文中取出`temp`，执行第二步把`temp`赋值给`count`的操作。赋值操作相当于直接修改了`count`的值，忽略了其它线程对`count`对象的加 1 的操作，就出现了`count`的结果值总是小于等于我们的期望值 5000000 的现象。
@@ -108,7 +108,6 @@ import time
 
 
 class Account:
-
     def __init__(self, balance: int):
         self.balance = balance  # 资产
 
@@ -119,7 +118,7 @@ def draw(account: Account, amount: int):
         # time.sleep(0.01)  # 模拟一个IO阻塞来引起线程切换
         account.balance -= amount
     else:
-        print(f'{threading.current_thread().name}: 余额不足，取钱失败')
+        print(f"{threading.current_thread().name}: 余额不足，取钱失败")
 
 
 my_account = Account(1000)
@@ -128,7 +127,7 @@ for th in ths:
     th.start()
 for th in ths:
     th.join()
-print(f'余额: {my_account.balance}')
+print(f"余额: {my_account.balance}")
 
 """
 运行结果
@@ -165,11 +164,13 @@ Thread-2: 余额不足，取钱失败
 ```python
 count = 0
 
+
 def add_count():
     global count
     count += 1
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     from dis import dis
 
     dis(add_count)
@@ -210,7 +211,7 @@ if __name__ == '__main__':
 2. 线程不安全
 
    ```python
-   i = i+1
+   i = i + 1
    L.append(L[-1])
    L[i] = L[j]
    D[x] = D[x] + 1
@@ -225,9 +226,9 @@ import threading
 
 lock = threading.Lock()
 
-lock.acquire() # 上锁
-lock.release() # 释放锁
-lock.locked() # bool 查看当前线程锁状态
+lock.acquire()  # 上锁
+lock.release()  # 释放锁
+lock.locked()  # bool 查看当前线程锁状态
 ```
 
 以 `Threading.Lock()`为例，线程锁的使用过程中重复的`acquire()`和`release()`会引起线程`block`或引发`RuntimeError`异常。所有可以使用下面模式来使用线程锁。
@@ -236,29 +237,28 @@ lock.locked() # bool 查看当前线程锁状态
 
    ```python
    import threading
-
+   
    lock = threading.Lock()
-
+   
    lock.acquire()  # 加锁
    try:
-       print('do something')
+       print("do something")
    finally:
        lock.release()
-
    ```
 
 2. **`with`模式**
 
    ```python
    import threading
-
+   
    lock = threading.Lock()
-
+   
    # 可以观察到 Lock 类中
    # __enter__ 会执行 lock.acquire()
    # __exit__ 会执行 lock.release()
    with lock:
-       print('do something')
+       print("do something")
    ```
 
 #### 使用线程锁重回示例
@@ -274,11 +274,11 @@ lock = threading.Lock()
 
 def add_count():
     global count
-    with lock:	# 加上线程锁
+    with lock:  # 加上线程锁
         count += 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from dis import dis
 
     dis(add_count)

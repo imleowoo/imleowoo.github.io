@@ -166,7 +166,7 @@ $$ k=\frac{m}{n}ln2 $$
 ```python
 from math import log, ceil
 
-n = 10 ** 8
+n = 10**8
 p = 0.0001
 
 # 根据公式 m=-n*lnp/(ln2)^2 获取bit位数
@@ -200,6 +200,7 @@ from math import ceil, log
 
 import mmh3
 from bitarray import bitarray
+
 
 class BloomFilter:
     """布隆过滤器实现基类"""
@@ -264,6 +265,7 @@ from math import ceil, log
 
 import mmh3
 import redis as redis
+
 
 class BloomFilter:
     """布隆过滤器实现基类"""

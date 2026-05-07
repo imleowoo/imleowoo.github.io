@@ -421,7 +421,7 @@ def infinite_palindromes():
     num = 0
     while True:
         if is_palindrome(num):
-            i = (yield num)
+            i = yield num
             if i is not None:
                 num = i
         num += 1
@@ -592,9 +592,7 @@ company_dicts = (dict(zip(cols, data)) for data in list_line)
 
 ```python
 funding = (
-    int(company_dict["raisedAmt"])
-    for company_dict in company_dicts
-    if company_dict["round"] == "a"
+    int(company_dict["raisedAmt"]) for company_dict in company_dicts if company_dict["round"] == "a"
 )
 ```
 
@@ -622,9 +620,7 @@ cols = next(list_line)
 company_dicts = (dict(zip(cols, data)) for data in list_line)
 # 获取每家公司A轮的融资金额，过滤了其它筹集的金额
 funding = (
-    int(company_dict["raisedAmt"])
-    for company_dict in company_dicts
-    if company_dict["round"] == "a"
+    int(company_dict["raisedAmt"]) for company_dict in company_dicts if company_dict["round"] == "a"
 )
 # 通过调用 sum() 来获取CSV文件中所有公司A轮融资的总金额
 total_series_a = sum(funding)

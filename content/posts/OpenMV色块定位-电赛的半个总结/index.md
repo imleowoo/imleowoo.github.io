@@ -134,61 +134,67 @@ while True:
         xPositionNow = x * 0.7
         yPositionNow = y * 0.7
         # 测试时打印出当前坐标
-        print(xPositionNow, yPositionNow, end=',')
+        print(xPositionNow, yPositionNow, end=",")
         # 通过串口将坐标数据发送给单片机处理，实际上发送的就是一段文本
-        uart.write(',' + str(xPositionNow) + ',' + str((-1) * yPositionNow) + ',')
+        uart.write("," + str(xPositionNow) + "," + str((-1) * yPositionNow) + ",")
         # 判断当前所在区域（A\B\C\D）
         if abs(xPositionNow) < 20 and abs(yPositionNow) < 20:
-            uart.write('A\n')
-            print('A')
-        elif yPositionNow < -20 and yPositionNow < xPositionNow and (-1) * yPositionNow > xPositionNow:
-            uart.write('B\n')
-            print('B')
-        elif xPositionNow > 20 and (-1) * yPositionNow < xPositionNow and yPositionNow < xPositionNow:
-            uart.write('C\n')
-            print('C')
-        elif yPositionNow > 20 and xPositionNow < yPositionNow and (-1) * xPositionNow < yPositionNow:
-            uart.write('D\n')
-            print('D')
+            uart.write("A\n")
+            print("A")
+        elif (
+            yPositionNow < -20
+            and yPositionNow < xPositionNow
+            and (-1) * yPositionNow > xPositionNow
+        ):
+            uart.write("B\n")
+            print("B")
+        elif (
+            xPositionNow > 20 and (-1) * yPositionNow < xPositionNow and yPositionNow < xPositionNow
+        ):
+            uart.write("C\n")
+            print("C")
+        elif (
+            yPositionNow > 20 and xPositionNow < yPositionNow and (-1) * xPositionNow < yPositionNow
+        ):
+            uart.write("D\n")
+            print("D")
         else:
-            uart.write('E\n')
-            print('E')
+            uart.write("E\n")
+            print("E")
         # 0.5s更新一下坐标数据
         time.sleep(500)
-
 ```
 
 #### 输出设备：显示设备的 51 单片机中写入的代码
 
 ```c
-#include<reg52.h>
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<math.h>
+#include <math.h>
+#include <reg52.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define uchar unsigned char
 #define uint unsigned int
 #define Buf_Max 80
 
 #define GPS_Buffer_Length 80
-#define gpsRxBufferLength  76
+#define gpsRxBufferLength 76
 
 #define false 0
 #define true 1
 
-sbit led1 = P1^1;
-sbit led2 = P1^2;
+sbit led1 = P1 ^ 1;
+sbit led2 = P1 ^ 2;
 
 bit flag = 1;
 
 typedef struct SaveData
 {
-	char GPS_Buffer[GPS_Buffer_Length];
-	char isGetData;		//是否获取到GPS数据
-	char isUsefull;		//定位信息是否有效
+    char GPS_Buffer[GPS_Buffer_Length];
+    char isGetData; // 是否获取到GPS数据
+    char isUsefull; // 定位信息是否有效
 } xdata _SaveData;
-
 
 char idata gpsRxBuffer[gpsRxBufferLength];
 uchar RX_Count = 0;
@@ -196,64 +202,63 @@ _SaveData Save_Data;
 
 char tempr;
 
-#include "uart.h"
 #include "lcd.h"
+#include "uart.h"
 
 /*********初始化函数*********/
 void init()
 {
-    TMOD=0x20;	  //设定定时器T1工作方式2
-	PCON=0x00;	  //串口波特率正常9600，不加倍；
-	SCON=0x50;	  //蓝牙串口工作方式为3
-    TH1=0xfd;	  //T1定时器装初值
-    TL1=0xfd;	  //T1定时器装初值
-    TR1=1;		  //启动T1定时器
-    REN=1;		  //允许串口接收
-    SM0=0;		  //设定串口工作方式1
-    SM1=1;		  //设定串口工作方式1
-    EA=1;		  //开总中断
-    ES=1;		  //开串口中断
-		EX1=1;
+    TMOD = 0x20; // 设定定时器T1工作方式2
+    PCON = 0x00; // 串口波特率正常9600，不加倍；
+    SCON = 0x50; // 蓝牙串口工作方式为3
+    TH1 = 0xfd;  // T1定时器装初值
+    TL1 = 0xfd;  // T1定时器装初值
+    TR1 = 1;     // 启动T1定时器
+    REN = 1;     // 允许串口接收
+    SM0 = 0;     // 设定串口工作方式1
+    SM1 = 1;     // 设定串口工作方式1
+    EA = 1;      // 开总中断
+    ES = 1;      // 开串口中断
+    EX1 = 1;
 }
 
 /***********主函数**********/
 void main()
 {
-	init();					 //初始化
-	lcd_init();
-	flag = 0;
-  while(1)
-	{
-		printfGps();
-//		write_cmd(0x01);
-  }
+    init(); // 初始化
+    lcd_init();
+    flag = 0;
+    while (1)
+    {
+        printfGps();
+        //		write_cmd(0x01);
+    }
 }
 
 void sint() interrupt 4
 {
-	ES=0;
-	if(RI == 1 && flag == 0)
-	{
-		RI=0;
-		tempr=SBUF;
+    ES = 0;
+    if (RI == 1 && flag == 0)
+    {
+        RI = 0;
+        tempr = SBUF;
 
-		if(tempr == '\n')
-		{
-			memset(Save_Data.GPS_Buffer, 0, GPS_Buffer_Length);      //清空
-			memcpy(Save_Data.GPS_Buffer, gpsRxBuffer, RX_Count); 	//保存数据
-			Save_Data.isGetData = true;
-			RX_Count = 0;
-			memset(gpsRxBuffer, 0, gpsRxBufferLength);      //清空
-			gpsRxBuffer[RX_Count] = '\0';//添加结束符
-		}
-		else
-		{
-			gpsRxBuffer[RX_Count++] = tempr;
-		}
-	}
-	ES=1;
+        if (tempr == '\n')
+        {
+            memset(Save_Data.GPS_Buffer, 0, GPS_Buffer_Length);  // 清空
+            memcpy(Save_Data.GPS_Buffer, gpsRxBuffer, RX_Count); // 保存数据
+            Save_Data.isGetData = true;
+            RX_Count = 0;
+            memset(gpsRxBuffer, 0, gpsRxBufferLength); // 清空
+            gpsRxBuffer[RX_Count] = '\0';              // 添加结束符
+        }
+        else
+        {
+            gpsRxBuffer[RX_Count++] = tempr;
+        }
+    }
+    ES = 1;
 }
-
 ```
 
 ## 写在最后

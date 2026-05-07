@@ -53,7 +53,6 @@ class ToScrapeSpider(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         pass
-
 ```
 
 命令行运行该爬虫 `toscrape` ，可以输出正常的日志信息。
@@ -190,12 +189,12 @@ stream_handler = logging.StreamHandler()
 stream_handler.setLevel(logging.INFO)
 logger.addHandler(stream_handler)
 # WARNING 以上级别写入日志文件
-file_handler = logging.FileHandler('example.log')
+file_handler = logging.FileHandler("example.log")
 file_handler.setLevel(logging.WARNING)
 logger.addHandler(file_handler)
 
-logger.info('Hello, info')
-logger.warning('Hello, warning')
+logger.info("Hello, info")
+logger.warning("Hello, warning")
 ```
 
 查看当前 `logger` 所绑定的 `handlers`。
@@ -208,7 +207,7 @@ print(logger.handlers)
 
 ```python
 handler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler.setFormatter(formatter)
 ```
 
@@ -223,14 +222,13 @@ handler.setFormatter(formatter)
 ```python
 # logging.Manager._fixupParents
 class Manager(object):
-
     def _fixupParents(self, alogger):
         """
         Ensure that there are either loggers or placeholders all the way
         from the specified logger to the root of the logger hierarchy.
         """
         name = alogger.name
-        i = name.rfind('.')  # 层次以 . 分割
+        i = name.rfind(".")  # 层次以 . 分割
         rv = None
         while (i > 0) and not rv:
             substr = name[:i]
@@ -243,7 +241,7 @@ class Manager(object):
                 else:
                     assert isinstance(obj, PlaceHolder)
                     obj.append(alogger)
-            i = name.rfind('.', 0, i - 1)
+            i = name.rfind(".", 0, i - 1)
         if not rv:
             rv = self.root  # 缺失父级时最终使用 root_logger
         alogger.parent = rv
@@ -254,7 +252,9 @@ class Manager(object):
 ```python
 import logging
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 ```
 
 [`logging.basicConfig()`](https://docs.python.org/zh-cn/3/library/logging.html#logging.basicConfig) 方法实际配置的是根记录器
@@ -303,8 +303,8 @@ class ToScrapeSpider(scrapy.Spider):
     start_urls = ["http://quotes.toscrape.com/"]
 
     def parse(self, response, **kwargs):
-        print('spider.logger 绑定的 handlers：', self.logger.logger.handlers)
-        print('root_logger 绑定的 handlers：', self.logger.logger.root.handlers)
+        print("spider.logger 绑定的 handlers：", self.logger.logger.handlers)
+        print("root_logger 绑定的 handlers：", self.logger.logger.root.handlers)
 ```
 
 **当不导入 airflow 时**，即日志正常的情况下，输出此时的结果。
@@ -326,11 +326,11 @@ root_logger 绑定的 handlers： [<LogCounterHandler (INFO)>, <StreamHandler <s
    ```python
    class LogCounterHandler(logging.Handler):
        """Record log levels count into a crawler stats"""
-
+   
        def __init__(self, crawler, *args, **kwargs):
            super().__init__(*args, **kwargs)
            self.crawler = crawler
-
+   
        def emit(self, record):
            sname = f"log_count/{record.levelname}"
            self.crawler.stats.inc_value(sname)
@@ -353,10 +353,7 @@ root_logger 绑定的 handlers： [<LogCounterHandler (INFO)>, <StreamHandler <s
 def install_scrapy_root_handler(settings):
     global _scrapy_root_handler
 
-    if (
-            _scrapy_root_handler is not None
-            and _scrapy_root_handler in logging.root.handlers
-    ):
+    if _scrapy_root_handler is not None and _scrapy_root_handler in logging.root.handlers:
         logging.root.removeHandler(_scrapy_root_handler)
     logging.root.setLevel(logging.NOTSET)
     _scrapy_root_handler = _get_handler(settings)
@@ -371,7 +368,6 @@ def _get_handler(settings):
     if settings.getbool("LOG_SHORT_NAMES"):
         handler.addFilter(TopLevelFormatter(["scrapy"]))
     return handler
-
 ```
 
 **当导入 airflow 时**，即日志不正常的情况下，相同的代码输出此时的结果。
